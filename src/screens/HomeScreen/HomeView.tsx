@@ -1,10 +1,11 @@
 import React from 'react';
-import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { FlatList, SafeAreaView} from 'react-native';
 import { GetCliniciansResponse, Clinician } from '../../interfaces';
 import Card from './Card';
+import styles from './styles';
 
 interface HomeViewProps {
-  onPressViewProfile: () => void
+  onPressViewProfile: (clinicianID: string) => void
 }
 
 type Props = HomeViewProps & GetCliniciansResponse;
@@ -19,21 +20,15 @@ const HomeView: React.FC<Props> = ({data, onPressViewProfile}) => {
         keyExtractor={(item: Clinician) => item.id}
         renderItem={({ item }: { item: Clinician }) => {
           return (
-            <Card data={item} onPressViewProfile={onPressViewProfile} />
+            <Card
+              data={item}
+              onPressViewProfile={() => onPressViewProfile(item.id)}
+            />
           );
         }}
       />
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  screenContainer: {
-    flex: 1, backgroundColor: '#F2F2F7',
-  },
-  contentContainerStyle: {
-    paddingHorizontal: 15,
-  },
-});
 
 export default HomeView;
