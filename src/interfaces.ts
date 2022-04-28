@@ -15,3 +15,8 @@ export interface GetCliniciansResponse {
 }
 
 
+export interface ClinicianState {
+  isLoading: boolean
+  data: Clinician[]
+  errorMessage: string
+}

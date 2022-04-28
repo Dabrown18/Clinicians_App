@@ -1,21 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import HomeView from './HomeView';
-import mockData from '../../mockData';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation';
 import { NavigationProp } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchClinicians } from '../../redux/cliniciansSlice';
 
 type NavigationProps = NavigationProp<RootStackParamList>;
 
 const HomeScreen: React.FC = () => {
+  const dispatch = useDispatch();
+  const clinicians = useSelector(state => state.clinicians.data);
   const { navigate } = useNavigation<NavigationProps>();
-
   const onPressViewProfile = (clinicianID: string) => {
-    return navigate('Detail', {clinicianID});
+
+    return navigate('Detail', clinicianID);
   };
 
+  useEffect(() => {
+    dispatch(fetchClinicians());
+  }, [clinicians]);
+
   return (
-    <HomeView data={mockData} onPressViewProfile={onPressViewProfile} />
+    <HomeView data={clinicians} onPressViewProfile={onPressViewProfile} />
   );
 };
 
