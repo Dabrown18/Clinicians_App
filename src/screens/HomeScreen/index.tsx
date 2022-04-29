@@ -15,9 +15,9 @@ const HomeScreen: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const clinicians = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
   const { navigate } = useNavigation<NavigationProps>();
-  const onPressViewProfile = (clinicianID: string) => {
 
-    return navigate('Detail', { clinicianID });
+  const onPressViewProfile = (clinician: Clinician) => {
+    return navigate('Detail', { clinician });
   };
 
   useEffect(() => {

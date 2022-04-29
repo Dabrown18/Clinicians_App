@@ -5,7 +5,7 @@ import Card from './Card';
 import styles from './styles';
 
 interface HomeViewProps {
-  onPressViewProfile: (clinicianID: string) => void
+  onPressViewProfile: (clinician: Clinician) => void
 }
 
 type Props = HomeViewProps & GetCliniciansResponse;
@@ -22,7 +22,7 @@ const HomeView: React.FC<Props> = ({data, onPressViewProfile}) => {
           return (
             <Card
               data={item}
-              onPressViewProfile={() => onPressViewProfile(item.id)}
+              onPressViewProfile={() => onPressViewProfile(item)}
             />
           );
         }}
