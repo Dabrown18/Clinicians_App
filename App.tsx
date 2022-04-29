@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MainStack from './src/navigation';
+import { MainStack, AuthStack } from './src/navigation';
 
 const App = () => {
   return (
-    <MainStack />
+    <AuthStack />
   );
 };
 

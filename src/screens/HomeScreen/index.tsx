@@ -21,6 +21,7 @@ const HomeScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    // @ts-ignore
     dispatch(fetchClinicians());
   }, [clinicians]);
 

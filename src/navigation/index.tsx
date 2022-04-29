@@ -5,14 +5,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import DetailScreen from '../screens/DetailScreen';
+import LoginScreen from '../screens/LoginScreen';
 import { Clinician } from '../interfaces';
 
-export type RootStackParamList = {
+export type StackParamList = {
+  Login: undefined
   Home: undefined;
   Detail: { clinician: Clinician };
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<StackParamList>();
 
 function MainStack() {
   return (
@@ -33,4 +35,19 @@ function MainStack() {
   );
 }
 
-export default MainStack;
+function AuthStack() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+
+
+export { MainStack, AuthStack };

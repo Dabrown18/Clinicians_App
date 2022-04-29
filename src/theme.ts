@@ -3,6 +3,8 @@ const colors = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
   LINK: '#005EB8',
+  BLUE: '#009ffd',
+  DARK_BLUE: '#2a2a72',
 };
 
 export default colors;
