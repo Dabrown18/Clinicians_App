@@ -5,17 +5,19 @@ import { RootStackParamList } from '../../navigation';
 import { NavigationProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClinicians } from '../../redux/slices/cliniciansSlice';
-import { Clinician } from "../../interfaces";
+import { Clinician } from '../../interfaces';
+import { RootState } from '../../redux/store';
+import { AppDispatch } from '../../redux/store';
 
 type NavigationProps = NavigationProp<RootStackParamList>;
 
 const HomeScreen: React.FC = () => {
-  const dispatch = useDispatch();
-  const clinicians = useSelector<Clinician[]>(state => state.clinicians.data);
+  const dispatch: AppDispatch = useDispatch();
+  const clinicians = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
   const { navigate } = useNavigation<NavigationProps>();
   const onPressViewProfile = (clinicianID: string) => {
 
-    return navigate('Detail', clinicianID);
+    return navigate('Detail', { clinicianID });
   };
 
   useEffect(() => {

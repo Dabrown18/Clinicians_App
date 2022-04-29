@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {createLogger} from 'redux-logger';
-import thunk from 'redux-thunk';
 import { reducers } from './slices';
 import {persistCombineReducers, persistStore} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import thunkMiddleware from 'redux-thunk';
 
 const logger = createLogger();
 
-const middleware = [logger, thunk];
+const middleware = [logger, thunkMiddleware];
 
 const persistConfig = {
   key: 'root',

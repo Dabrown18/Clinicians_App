@@ -23,19 +23,19 @@ const cliniciansSlice = createSlice({
   name: 'clinicians',
   initialState: INITIAL_STATE,
   reducers: {},
-  extraReducers: {
-    [fetchClinicians.fulfilled]: (state, actions: PayloadAction<Clinician[]>) => {
+  extraReducers: builder => {
+    builder.addCase(fetchClinicians.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchClinicians.fulfilled, (state, actions: PayloadAction<Clinician[]>) => {
       state.data = actions.payload;
       state.isLoading = false;
       state.errorMessage = '';
-    },
-    [fetchClinicians.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [fetchClinicians.rejected]: (state) => {
+    });
+    builder.addCase(fetchClinicians.rejected, (state) => {
       state.isLoading = false;
-      state.error = 'Failed to get clinicians';
-    },
+      state.errorMessage = 'Failed to get clinicians';
+    });
   },
 });
 

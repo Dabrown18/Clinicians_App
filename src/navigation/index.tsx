@@ -8,7 +8,7 @@ import DetailScreen from '../screens/DetailScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  Detail: undefined;
+  Detail: { clinicianID: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function MainStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerBackTitleVisible: false }}>
         <Stack.Screen
           name="Home"
           component={HomeScreen}
