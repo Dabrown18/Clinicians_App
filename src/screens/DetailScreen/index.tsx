@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 
 const DetailsScreen: React.FC = () => {
   const { params: clinicianID } = useRoute();
-  const data = useSelector(state => state.clinicians.data.find(clinician => {
-    return clinician.id === clinicianID;
+  const clinician = useSelector(state => state.clinicians.data.find(item => {
+    return item.id === clinicianID;
   }));
 
   return (
-    <DetailView data={data} />
+    <DetailView data={clinician} />
   );
 };
 

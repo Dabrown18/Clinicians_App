@@ -5,13 +5,16 @@ import React from 'react';
 import {AppRegistry} from 'react-native';
 import App from './App';
 import {name as appName} from './app.json';
-import {store} from './src/redux/store';
+import persistor, {store} from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
 
 const AssessmentApp = () => {
   return (
     <Provider store={store}>
-      <App />
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   );
 };

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Clinician } from '../interfaces';
-import { ClinicianState } from '../interfaces';
+import { Clinician } from '../../interfaces';
+import { ClinicianState } from '../../interfaces';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import mockData from '../mockData';
+import mockData from '../../mockData';
 
 const FETCH_ARTICLES = 'fetchClinicians';
 export const fetchClinicians = createAsyncThunk(
