@@ -17,12 +17,17 @@ export const INITIAL_STATE: ClinicianState = {
   isLoading: false,
   data: [],
   errorMessage: '',
+  favoriteClinician: undefined,
 };
 
 const cliniciansSlice = createSlice({
   name: 'clinicians',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    selectFavoriteClinician: (state, action: PayloadAction<Clinician | undefined>) => {
+      state.favoriteClinician = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchClinicians.pending, state => {
       state.isLoading = true;
