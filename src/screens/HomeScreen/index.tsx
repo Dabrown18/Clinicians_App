@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { StackParamList } from '../../navigation';
 import { NavigationProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchClinicians } from '../../redux/slices/cliniciansSlice';
-import { Clinician } from '../../interfaces';
+import { Clinician, UserLocation } from '../../interfaces';
 import { RootState } from '../../redux/store';
 import { AppDispatch } from '../../redux/store';
 import Geolocation from '@react-native-community/geolocation';
-import { UserLocation } from '../../interfaces';
+import { cliniciansActions } from '../../redux/slices/cliniciansSlice';
+import mockData from '../../mockData';
 
 type NavigationProps = NavigationProp<StackParamList>;
 
@@ -21,11 +21,13 @@ const HomeScreen: React.FC = () => {
     return state.clinicians.favoriteClinician ? state.clinicians.favoriteClinician : undefined;
   });
 
+  useEffect(() => {
+    Geolocation.getCurrentPosition(info => setUserLocation(info));
+  }, []);
+
   const [modalVisible, setModalVisible] = useState(false);
   const [userLocation, setUserLocation] = useState<UserLocation>(undefined);
   const [clinicians, setClinicians] = useState<Clinician[]>(data);
-
-  Geolocation.getCurrentPosition(info => setUserLocation(info));
 
   const onPressViewProfile = (clinician: Clinician) => {
     return navigate('Detail', { clinician });
@@ -33,8 +35,8 @@ const HomeScreen: React.FC = () => {
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchClinicians());
-  }, [data]);
+    dispatch(cliniciansActions.getClinicians(mockData));
+  }, []);
 
   const onPressShowAll = () => {
     setClinicians(data);
