@@ -10,6 +10,7 @@ import {
 import { GetCliniciansResponse, Clinician, UserLocation } from '../../interfaces';
 import Card from './Card';
 import styles from './styles';
+import FavoriteClinician from './FavoriteClinician';
 
 interface HomeViewProps {
   onPressViewProfile: (clinician: Clinician) => void
@@ -43,16 +44,10 @@ const HomeView: React.FC<Props> = ({
           <Text style={styles.filterText}>FILTER</Text>
         </TouchableOpacity>
         {favoriteClinician !== undefined && (
-          <>
-            <View>
-              <Text style={styles.favoriteText}>Favorite Clinician</Text>
-              <Card
-                data={favoriteClinician}
-                onPressViewProfile={() => onPressViewProfile(favoriteClinician)}
-              />
-            </View>
-            <View style={styles.divider} />
-          </>
+          <FavoriteClinician
+            favoriteClinician={favoriteClinician}
+            onPressViewProfile={() => onPressViewProfile(favoriteClinician)}
+          />
         )}
         <FlatList
           showsVerticalScrollIndicator={false}
