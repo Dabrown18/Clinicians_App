@@ -18,6 +18,7 @@ interface HomeViewProps {
   onPressShowAll: () => void
   onPressFilterByLocation: () => void
   userLocation?: UserLocation
+  favoriteClinician: Clinician | undefined
 }
 
 type Props = HomeViewProps & GetCliniciansResponse;
@@ -29,51 +30,65 @@ const HomeView: React.FC<Props> = ({
   setModalVisible,
   onPressShowAll,
   onPressFilterByLocation,
-  userLocation
+  userLocation,
+  favoriteClinician,
 }) => {
   return (
-    <SafeAreaView style={styles.screenContainer}>
-      <TouchableOpacity
-        onPress={() => setModalVisible(!modalVisible)}
-        style={styles.filterButton}
-      >
-        <Text style={styles.filterText}>FILTER</Text>
-      </TouchableOpacity>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.contentContainerStyle}
-        data={data}
-        keyExtractor={(item: Clinician) => item.id}
-        renderItem={({ item }: { item: Clinician }) => {
-          return (
-            <Card
-              data={item}
-              onPressViewProfile={() => onPressViewProfile(item)}
-            />
-          );
-        }}
-      />
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalContainer}>
-          <TouchableOpacity style={styles.button} onPress={onPressShowAll}>
-            <Text style={styles.buttonText}>Show all</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            disabled={!userLocation?.coords}
-            style={styles.button}
-            onPress={onPressFilterByLocation}
-          >
-            <Text style={styles.buttonText}>Filter by location</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+    <SafeAreaView style={styles.safeAreaView}>
+      <View style={styles.screenContainer}>
+        <TouchableOpacity
+          onPress={() => setModalVisible(!modalVisible)}
+          style={styles.filterButton}
+        >
+          <Text style={styles.filterText}>FILTER</Text>
+        </TouchableOpacity>
+        {favoriteClinician !== undefined && (
+          <>
+            <View>
+              <Text style={styles.favoriteText}>Favorite Clinician</Text>
+              <Card
+                data={favoriteClinician}
+                onPressViewProfile={() => onPressViewProfile(favoriteClinician)}
+              />
+            </View>
+            <View style={styles.divider} />
+          </>
+        )}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={data}
+          keyExtractor={(item: Clinician) => item.id}
+          renderItem={({ item }: { item: Clinician }) => {
+            return (
+              <Card
+                data={item}
+                onPressViewProfile={() => onPressViewProfile(item)}
+              />
+            );
+          }}
+        />
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <TouchableOpacity style={styles.button} onPress={onPressShowAll}>
+              <Text style={styles.buttonText}>Show all</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={!userLocation?.coords}
+              style={styles.button}
+              onPress={onPressFilterByLocation}
+            >
+              <Text style={styles.buttonText}>Filter by location</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
     </SafeAreaView>
   );
 };

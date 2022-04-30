@@ -17,6 +17,9 @@ const HomeScreen: React.FC = () => {
   const { navigate } = useNavigation<NavigationProps>();
   const dispatch: AppDispatch = useDispatch();
   const data = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
+  const favoriteClinician = useSelector<RootState, Clinician | undefined>(state => {
+    return state.clinicians.favoriteClinician ? state.clinicians.favoriteClinician : undefined;
+  });
 
   const [modalVisible, setModalVisible] = useState(false);
   const [userLocation, setUserLocation] = useState<UserLocation>(undefined);
@@ -88,6 +91,7 @@ const HomeScreen: React.FC = () => {
 
   return (
     <HomeView
+      favoriteClinician={favoriteClinician}
       userLocation={userLocation}
       data={clinicians}
       onPressViewProfile={onPressViewProfile}
