@@ -12,7 +12,8 @@ import styles from './styles';
 import FavoriteClinician from './FavoriteClinician';
 import FilterModel from './FilterModel';
 
-interface HomeViewProps {
+interface Props {
+  data: Clinician[]
   onPressViewProfile: (clinician: Clinician) => void
   setModalVisible: (val: boolean) => void
   modalVisible: boolean
@@ -21,8 +22,6 @@ interface HomeViewProps {
   userLocation?: UserLocation
   favoriteClinician: Clinician | undefined
 }
-
-type Props = HomeViewProps & GetCliniciansResponse;
 
 const HomeView: React.FC<Props> = ({
   data,
@@ -50,12 +49,14 @@ const HomeView: React.FC<Props> = ({
           />
         )}
         <FlatList
+          testID={'clinicians'}
           showsVerticalScrollIndicator={false}
           data={data}
           keyExtractor={(item: Clinician) => item.id}
           renderItem={({ item }: { item: Clinician }) => {
             return (
               <Card
+                testID={`clinician-${item.id}`}
                 data={item}
                 onPressViewProfile={() => onPressViewProfile(item)}
               />
