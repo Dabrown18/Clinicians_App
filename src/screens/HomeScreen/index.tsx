@@ -14,11 +14,14 @@ import { UserLocation } from '../../interfaces';
 type NavigationProps = NavigationProp<StackParamList>;
 
 const HomeScreen: React.FC = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [userLocation, setUserLocation] = useState<UserLocation | undefined>(undefined);
-  const dispatch: AppDispatch = useDispatch();
-  const clinicians = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
   const { navigate } = useNavigation<NavigationProps>();
+  const dispatch: AppDispatch = useDispatch();
+  const data = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [userLocation, setUserLocation] = useState<UserLocation>(undefined);
+  const [clinicians, setClinicians] = useState<Clinician[]>(data);
+
   Geolocation.getCurrentPosition(info => setUserLocation(info));
 
   const onPressViewProfile = (clinician: Clinician) => {
@@ -28,28 +31,60 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchClinicians());
-  }, [clinicians]);
+  }, [data]);
 
   const onPressShowAll = () => {
+    setClinicians(data);
     setModalVisible(!modalVisible);
   };
 
   const onPressFilterByLocation = () => {
-    const longitude = userLocation?.coords.longitude;
-    const latitude = userLocation?.coords.latitude;
-    console.log('user location: ', userLocation);
+    const longitude: number = userLocation?.coords.longitude;
+    const latitude: number = userLocation?.coords.latitude;
+    const nearLocations: Clinician[] = [];
 
-    clinicians.filter(clinician => {
-      clinician.location.search('', {
-        aroundLatLng: `${latitude}, ${longitude}`,
-        aroundRadius: 1000000 // 1000 km
-      }).then(({ hits }) => {
-        console.log(hits);
-      });
-    })
+    data.map( async clinician => {
+      let location = JSON.parse(clinician.location);
 
+      const pointIn = {
+        latitude: parseFloat(location[0]),
+        longitude: parseFloat(location[1]),
+      };
+
+      const distance = calculateDistance(
+        latitude,
+        longitude,
+        pointIn.latitude,
+        pointIn.longitude,
+        'K'
+      );
+
+      if (distance < 3000) {
+        nearLocations.push(clinician);
+      }
+    });
+
+    setClinicians(nearLocations);
     setModalVisible(!modalVisible);
   };
+
+  function calculateDistance(lat1, lon1, lat2, lon2, unit) {
+    const radlat1 = Math.PI * lat1 / 180;
+    const radlat2 = Math.PI * lat2 / 180;
+    const theta = lon1 - lon2;
+    const radtheta = Math.PI * theta / 180;
+    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    dist = Math.acos(dist);
+    dist = dist * 180 / Math.PI;
+    dist = dist * 60 * 1.1515;
+    if (unit === 'K') {
+      dist = dist * 1.609344;
+    }
+    if (unit === 'N') {
+      dist = dist * 0.8684;
+    }
+    return parseInt(dist + unit);
+  }
 
   return (
     <HomeView
