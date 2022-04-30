@@ -34,3 +34,7 @@ export interface UserLocation {
   }
   timestamp: number
 }
+
+export interface AuthState {
+  isLogged: boolean
+}
