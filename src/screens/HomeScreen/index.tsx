@@ -8,14 +8,18 @@ import { fetchClinicians } from '../../redux/slices/cliniciansSlice';
 import { Clinician } from '../../interfaces';
 import { RootState } from '../../redux/store';
 import { AppDispatch } from '../../redux/store';
+import Geolocation from '@react-native-community/geolocation';
+import { UserLocation } from '../../interfaces';
 
 type NavigationProps = NavigationProp<StackParamList>;
 
 const HomeScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [userLocation, setUserLocation] = useState<UserLocation | undefined>(undefined);
   const dispatch: AppDispatch = useDispatch();
   const clinicians = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
   const { navigate } = useNavigation<NavigationProps>();
+  Geolocation.getCurrentPosition(info => setUserLocation(info));
 
   const onPressViewProfile = (clinician: Clinician) => {
     return navigate('Detail', { clinician });
@@ -31,11 +35,25 @@ const HomeScreen: React.FC = () => {
   };
 
   const onPressFilterByLocation = () => {
+    const longitude = userLocation?.coords.longitude;
+    const latitude = userLocation?.coords.latitude;
+    console.log('user location: ', userLocation);
+
+    clinicians.filter(clinician => {
+      clinician.location.search('', {
+        aroundLatLng: `${latitude}, ${longitude}`,
+        aroundRadius: 1000000 // 1000 km
+      }).then(({ hits }) => {
+        console.log(hits);
+      });
+    })
+
     setModalVisible(!modalVisible);
   };
 
   return (
     <HomeView
+      userLocation={userLocation}
       data={clinicians}
       onPressViewProfile={onPressViewProfile}
       modalVisible={modalVisible}
