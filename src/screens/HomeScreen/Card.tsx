@@ -6,10 +6,11 @@ import styles from './styles';
 interface Props {
   data: Clinician
   onPressViewProfile: () => void
+  testID?: string
 }
-const Card: React.FC<Props> = ({data, onPressViewProfile}) => {
+const Card: React.FC<Props> = ({data, onPressViewProfile, testID}) => {
   return (
-    <TouchableOpacity style={styles.cardContainer} onPress={onPressViewProfile}>
+    <TouchableOpacity testID={testID} style={styles.cardContainer} onPress={onPressViewProfile}>
       <Image source={{ uri: data.imageUrl }} style={styles.avatar} />
       <View style={styles.titleContainer}>
         <Text style={styles.name}>{data.firstName} {data.lastName}</Text>

@@ -19,6 +19,7 @@ export interface ClinicianState {
   isLoading: boolean
   data: Clinician[]
   errorMessage: string
+  favoriteClinician: Clinician | undefined
 }
 
 export interface UserLocation {
@@ -32,4 +33,8 @@ export interface UserLocation {
     speed: number
   }
   timestamp: number
+}
+
+export interface AuthState {
+  isLogged: boolean
 }

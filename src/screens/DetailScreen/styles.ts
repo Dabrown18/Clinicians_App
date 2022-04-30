@@ -39,6 +39,24 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 5,
   },
+  favoriteContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  favoriteButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 30 / 2,
+    borderColor: colors.BLUE,
+    borderWidth: 2,
+    marginRight: 5,
+  },
+  favoriteText: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
 });
 
 export default styles;

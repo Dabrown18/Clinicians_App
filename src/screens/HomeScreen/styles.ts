@@ -2,12 +2,13 @@ import { StyleSheet } from 'react-native';
 import colors from '../../theme';
 
 const styles = StyleSheet.create({
-  screenContainer: {
+  safeAreaView: {
     flex: 1,
     backgroundColor: colors.BACKGROUND_COLOR,
   },
-  contentContainerStyle: {
-    padding: 15,
+  screenContainer: {
+    flex: 1,
+    paddingHorizontal: 15,
   },
   cardContainer: {
     padding: 15,
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: '600',
-    fontSize: 16
+    fontSize: 16,
   },
   title: {
     fontWeight: '400',
@@ -54,6 +55,8 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 20,
+    borderRadius: 5,
   },
   filterText: {
     fontSize: 20,
@@ -89,6 +92,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     color: colors.WHITE,
+  },
+  favoriteText: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 10,
+  },
+  divider: {
+    borderWidth: 0.3,
+    borderColor: colors.GREY,
+    marginTop: 10,
+    marginBottom: 20,
   },
 });
 

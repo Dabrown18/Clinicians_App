@@ -1,26 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import { MainStack, AuthStack } from './src/navigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
+import { RootState } from './src/redux/store';
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const isLogged = useSelector<RootState>(state => state.auth.isLogged);
+
   useEffect(() => {
-    getToken();
-  }, []);
+  }, [isLogged]);
 
-  const getToken = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      if (value !== null) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      // Error retrieving data
-      setIsAuthenticated(false);
-    }
-  };
-
-  return isAuthenticated ? <MainStack /> : <AuthStack />;
+  return isLogged ? <MainStack /> : <AuthStack />;
 };
 
 export default App;

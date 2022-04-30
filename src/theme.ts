@@ -5,6 +5,7 @@ const colors = {
   LINK: '#005EB8',
   BLUE: '#009ffd',
   DARK_BLUE: '#2a2a72',
+  GREY: '#C5C5C5',
 };
 
 export default colors;
