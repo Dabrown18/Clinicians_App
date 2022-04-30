@@ -1,8 +1,8 @@
-import React from "react";
-import { View, Text } from "react-native";
-import styles from "./styles";
-import Card from "./Card";
-import { Clinician } from "../../interfaces";
+import React from 'react';
+import { View, Text } from 'react-native';
+import styles from './styles';
+import Card from './Card';
+import { Clinician } from '../../interfaces';
 
 interface Props {
   onPressViewProfile: (clinician: Clinician) => void
