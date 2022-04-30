@@ -28,7 +28,7 @@ const cliniciansSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(fetchClinicians.fulfilled, (state, actions: PayloadAction<Clinician[]>) => {
-      state.data = actions.payload;
+      state.data = actions.payload.sort((a, b) => a.firstName.localeCompare(b.firstName));
       state.isLoading = false;
       state.errorMessage = '';
     });
