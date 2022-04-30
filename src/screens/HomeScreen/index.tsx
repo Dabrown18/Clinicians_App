@@ -10,6 +10,8 @@ import { RootState } from '../../redux/store';
 import { AppDispatch } from '../../redux/store';
 import Geolocation from '@react-native-community/geolocation';
 import { UserLocation } from '../../interfaces';
+import Geocoder from 'react-native-geocoding';
+Geocoder.init('AIzaSyDijmfrWT24xBXF56U5tK-ZtNu88yEIT3E');
 
 type NavigationProps = NavigationProp<StackParamList>;
 
@@ -42,24 +44,29 @@ const HomeScreen: React.FC = () => {
     const longitude: number = userLocation?.coords.longitude;
     const latitude: number = userLocation?.coords.latitude;
     const nearLocations: Clinician[] = [];
+    let userLocationByState = '';
+
+    Geocoder.from(latitude, longitude)
+      .then(json => {
+        userLocationByState = json.results[0].address_components[5].long_name;
+      })
+      .catch(error => console.warn(error));
 
     data.map( async clinician => {
       let location = JSON.parse(clinician.location);
+      let clinicianLocationByState = '';
 
       const pointIn = {
         latitude: parseFloat(location[0]),
         longitude: parseFloat(location[1]),
       };
 
-      const distance = calculateDistance(
-        latitude,
-        longitude,
-        pointIn.latitude,
-        pointIn.longitude,
-        'K'
-      );
-
-      if (distance < 3000) {
+      Geocoder.from(pointIn.latitude, pointIn.longitude)
+        .then(json => {
+          clinicianLocationByState = json.results[0].address_components[5].long_name;
+        })
+        .catch(error => console.warn(error));
+      if (clinicianLocationByState === userLocationByState) {
         nearLocations.push(clinician);
       }
     });
@@ -67,24 +74,6 @@ const HomeScreen: React.FC = () => {
     setClinicians(nearLocations);
     setModalVisible(!modalVisible);
   };
-
-  function calculateDistance(lat1, lon1, lat2, lon2, unit) {
-    const radlat1 = Math.PI * lat1 / 180;
-    const radlat2 = Math.PI * lat2 / 180;
-    const theta = lon1 - lon2;
-    const radtheta = Math.PI * theta / 180;
-    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-    dist = Math.acos(dist);
-    dist = dist * 180 / Math.PI;
-    dist = dist * 60 * 1.1515;
-    if (unit === 'K') {
-      dist = dist * 1.609344;
-    }
-    if (unit === 'N') {
-      dist = dist * 0.8684;
-    }
-    return parseInt(dist + unit);
-  }
 
   return (
     <HomeView
