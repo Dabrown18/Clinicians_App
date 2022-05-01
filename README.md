@@ -6,11 +6,6 @@
 
 <h3 align="center">Welcome</h3>
 
-  <p align="center">
-    You can access all the repos to the projects that are hosted on YouTube!
-    <br />
-    <br />
-  </p>
 <div style="justify-content: space-between;" align="center">
     <img width="250" height="502" src="images/image_1.png">
     <img width="250" height="502" src="images/image_2.png">
@@ -28,8 +23,8 @@ reauthenticate.
 
 ### Issues
 Attempted to use Google Maps API to find clinicians by state. I was successful.
-The problem is the Google API cost. I reached my API limit after 3 refreshes. Although
-the real app is on the `master` branch, if you want to run the app using Geocoder, run the command. 
+The problem is the Google API cost. I reached my API limit after 3 refreshes, so I used the coordinates instead of finding the
+state location of the clinicians. Although the real app is on the `master` branch, if you want to run the app using Geocoder, run the command. 
 
 Because I have a M1 Macbook, I had trouble building the app on Android. If the app is not
 being test on a M1, you should be good to go. 
