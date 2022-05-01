@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import HomeView from './HomeView';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { StackParamList } from '../../navigation';
-import { NavigationProp } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Clinician, UserLocation } from '../../interfaces';
 import { RootState } from '../../redux/store';
@@ -16,30 +15,25 @@ type NavigationProps = NavigationProp<StackParamList>;
 const HomeScreen: React.FC = () => {
   const { navigate } = useNavigation<NavigationProps>();
   const dispatch: AppDispatch = useDispatch();
-  const data = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
+  const clinicians = useSelector<RootState, Clinician[]>(state => state.clinicians.data);
   const favoriteClinician = useSelector<RootState, Clinician | undefined>(state => {
     return state.clinicians.favoriteClinician ? state.clinicians.favoriteClinician : undefined;
   });
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition(info => setUserLocation(info));
-  }, []);
-
   const [modalVisible, setModalVisible] = useState(false);
   const [userLocation, setUserLocation] = useState<UserLocation>(undefined);
-  const [clinicians, setClinicians] = useState<Clinician[]>(data);
+
+  useEffect(() => {
+    dispatch(cliniciansActions.getClinicians(mockData));
+    Geolocation.getCurrentPosition(info => setUserLocation(info));
+  }, []);
 
   const onPressViewProfile = (clinician: Clinician) => {
     return navigate('Detail', { clinician });
   };
 
-  useEffect(() => {
-    // @ts-ignore
-    dispatch(cliniciansActions.getClinicians(mockData));
-  }, []);
-
   const onPressShowAll = () => {
-    setClinicians(data);
+    dispatch(cliniciansActions.getClinicians(mockData));
     setModalVisible(!modalVisible);
   };
 
@@ -48,7 +42,7 @@ const HomeScreen: React.FC = () => {
     const latitude: number = userLocation?.coords.latitude;
     const nearLocations: Clinician[] = [];
 
-    data.map( async clinician => {
+    clinicians.map( async clinician => {
       let location = JSON.parse(clinician.location);
 
       const pointIn = {
@@ -68,8 +62,7 @@ const HomeScreen: React.FC = () => {
         nearLocations.push(clinician);
       }
     });
-
-    setClinicians(nearLocations);
+    dispatch(cliniciansActions.getClinicians(nearLocations));
     setModalVisible(!modalVisible);
   };
 
