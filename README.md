@@ -29,7 +29,10 @@ reauthenticate.
 ### Issues
 Attempted to use Google Maps API to find clinicians by state. I was successful.
 The problem is the Google API cost. I reached my API limit after 3 refreshes. Although
-the real app is on the `master` branch, if you want to run the app using Geocoder, run the command.
+the real app is on the `master` branch, if you want to run the app using Geocoder, run the command. 
+
+Because I have a M1 Macbook, I had trouble building the app on Android. If the app is not
+being test on a M1, you should be good to go. 
 
 ### Built With
 
