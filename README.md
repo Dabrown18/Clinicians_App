@@ -7,7 +7,6 @@
 <h3 align="center">Welcome</h3>
 
   <p align="center">
-    You can access all the repos to the projects that are hosted on YouTube!
     <br />
     <br />
   </p>
@@ -28,7 +27,7 @@ reauthenticate.
 
 ### Issues
 Attempted to use Google Maps API to find clinicians by state. I was successful.
-The problem is the Google API cost. I reached my API limit after 3 refreshes. Although
+The problem is the Google API cost. I reached my API limit after 3 refreshes, so I used the coordinates instead of finding the state. Although
 the real app is on the `master` branch, if you want to run the app using Geocoder, run the command. 
 
 Because I have a M1 Macbook, I had trouble building the app on Android. If the app is not
