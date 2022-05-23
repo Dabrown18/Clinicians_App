@@ -9,7 +9,7 @@ import persistor, {store} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Provider} from 'react-redux';
 
-const AssessmentApp = () => {
+const CliniciansAppApp = () => {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
@@ -19,4 +19,4 @@ const AssessmentApp = () => {
   );
 };
 
-AppRegistry.registerComponent(appName, () => AssessmentApp);
+AppRegistry.registerComponent(appName, () => CliniciansAppApp);
