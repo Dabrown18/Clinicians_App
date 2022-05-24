@@ -21,8 +21,6 @@ commonly used libraries, and display my ability to design a React Native applica
 is beginning to become to go to library for state management, and used redux persist to prevent users from having to
 reauthenticate.
 
-Because I have a M1 Macbook, I had trouble building the app on Android. If the app is not
-being test on a M1, you should be good to go. 
 
 ### Built With
 
