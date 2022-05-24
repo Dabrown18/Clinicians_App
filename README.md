@@ -21,15 +21,6 @@ commonly used libraries, and display my ability to design a React Native applica
 is beginning to become to go to library for state management, and used redux persist to prevent users from having to
 reauthenticate.
 
-### Issues
-Attempted to use Google Maps API to find clinicians by state. I was successful.
-The problem is the Google API cost. I reached my API limit after 3 refreshes, so I used the coordinates instead of finding the
-state location of the clinicians. Although the real app is on the `master` branch, if you want to run the app using Geocoder, run the command. 
-
-```sh
-   git checkout geocoder
-   ```
-
 Because I have a M1 Macbook, I had trouble building the app on Android. If the app is not
 being test on a M1, you should be good to go. 
 
